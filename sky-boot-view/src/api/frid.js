@@ -1,9 +1,9 @@
 import Axios from '../axios'
-const API = 'order';
+const API = 'frid';
 // 获取信息
 export const getData = (data) => {
     return Axios.request({
-        url: `/${API}/list/search`,
+        url: `/${API}/production`,
         method: 'post',
         data:JSON.stringify(data),
         headers: {
@@ -14,7 +14,7 @@ export const getData = (data) => {
 // 获取信息
 export const getList = () => {
     return Axios.request({
-        url: `/frid/data`,
+        url: `/${API}/data`,
         method: 'get'
     })
 };

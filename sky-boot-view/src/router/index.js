@@ -8,7 +8,7 @@ import Menu from 'views/system/menu'
 import Dept from 'views/system/dept'
 import Dict from 'views/system/dict'
 import Quartz from 'views/quartz'
-import Order from 'views/order'
+import Frid from 'views/frid'
 import localStore from 'storejs'
 import ObjUtil from "../util/ObjUtil";
 
@@ -52,8 +52,8 @@ const routes = [
                 component: Quartz
             },
             {
-                path: '/order',
-                component: Order
+                path: '/frid',
+                component: Frid
             },
         ]
     }

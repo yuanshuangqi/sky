@@ -13,7 +13,7 @@ const mutations = {
         state.userInfo.username = loginInfo.username;
         state.userInfo.token = loginInfo.token;
         // 跳转至Home页面
-        router.push('/home')
+        router.push('/frid')
     },
     [SET_USER_INFO](state, userInfo) {
         // 设置用户信息

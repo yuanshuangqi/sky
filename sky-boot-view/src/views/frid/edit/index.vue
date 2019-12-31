@@ -1,9 +1,9 @@
 <template>
-    <el-dialog title="新增订单" :visible.sync="addDialogVisible" :close-on-click-modal="false">
-        <el-form label-position="right" :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
+    <el-dialog title="编辑订单" :visible.sync="editDialogVisible" :close-on-click-modal="false">
+        <el-form label-position="right" :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="addFormSubmit">确 定</el-button>
+            <el-button type="primary" @click="editFormSubmit">确 定</el-button>
             <el-button type="info" @click="resetAddForm">重 置</el-button>
             <el-button @click="closeDialog">取 消</el-button>
         </div>
@@ -11,39 +11,42 @@
 </template>
 
 <script>
-    import {add} from 'api/order'
+    import {edit} from 'api/frid'
     export default {
         name: "index",
         props:{
-            addChildDialogVisible:Boolean,
+            editChildDialogVisible:Boolean,
+            editObj:Object
         },
         data(){
             return {
-                addForm:{
+                editForm:{
+                    id:''
                 },
-                addFormRules:{
+                editFormRules:{
                 }
             }
         },
         computed:{
-            addDialogVisible:{
+            editDialogVisible:{
                 get(){
-                    return this.$props.addChildDialogVisible
+                    return this.$props.editChildDialogVisible
                 },
                 set(){
                     this.closeDialog()
                 }
+
             }
         },
         methods:{
             closeDialog(){
-                this.$emit('closeAddDialog')
+                this.$emit('closeEditDialog')
             },
             resetAddForm(){
-                this.$refs.addFormRef.resetFields()
+                this.$refs.editFormRef.resetFields()
             },
-            addFormSubmit(){
-                add(this.addForm).then(res => {
+            editFormSubmit(){
+                edit(this.editForm).then(res => {
                     let result = res.data
                     if(result.success){
                         this.$message.success(result.message)
@@ -54,6 +57,9 @@
             }
         },
         watch:{
+            editObj(newVal){
+                this.editForm.id = newVal.id
+            }
         }
     }
 </script>

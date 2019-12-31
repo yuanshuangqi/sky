@@ -1,43 +1,66 @@
 <template>
     <div class="main">
         <div id="fridData" style="width: 800px;height: 600px;"></div>
-        <div id="total" style="width: 200px;height: 600px;">
-            <ul>
+        <div id="total" style="width: 250px;height: 600px;">
+            <ul class="totalData">
                 <li class="itemCount" v-for="(item, index) in total" :key="index">
                     {{item.processName}}<br>
                     {{item.totalCount}}
                 </li>
+                <li id="20" class="30">你好</li>
             </ul>
         </div>
     </div>
 </template>
 <script>
     import echarts from 'echarts'
-    import {getList} from 'api/order'
+    import {getList,getData} from 'api/frid'
 
     export default {
         name: '',
         data() {
-
             return {
                 charts: '',
-                total: []
+                total: [],
+                query: {
+                    dateFrom: '',
+                    dateTo: ''
+                },
+                production:[]
             }
         },
         methods: {
-            // search(){
-            //     axios.get('http://localhost:8082/frid/data')
-            //                     .then(function (response){
-            //                            this.total = response.data;
-            //                         });
-            // },
+
+            getProduction(){
+                getData(this.query).then(res => {
+                    this.production = res.data.productionInfoList;
+                    console.log(this.production);
+                })
+            },
             search() {
                 getList().then(res => {
                     this.total = res.data.fridDataInfoList;
                     console.log(this.total)
+                    this.$nextTick(function () {
+                     this.drawPie('fridData');
+                    })
                 })
             },
             drawPie(id) {
+                const processList = this.total.map(item => {
+                    return {
+                        value: item.totalCount,
+                        name: item.processName
+                    }
+                })
+                const productionList = this.production.map(item => {
+                    return {
+                        id: item.id,
+                        dicId: item.dicId,
+                        value: item.productionQty,
+                        name: item.dicValue
+                    }
+                })
                 this.charts = echarts.init(document.getElementById(id))
                 this.charts.setOption({
                     tooltip: {
@@ -66,16 +89,10 @@
                                     show: false
                                 }
                             },
-                            data: [
-                                {value: 335, name: '吊牌', selected: true},
-                                {value: 679, name: '包装'},
-                                {value: 1548, name: '检针'},
-                                {value: 1548, name: '出货'},
-                                {value: 1548, name: '捆包'}
-
-                            ]
+                            data: processList
                         },
                         {
+                            data: productionList,
                             name: '访问来源',
                             type: 'pie',
                             radius: ['40%', '55%'],
@@ -111,34 +128,19 @@
                                         }
                                     }
                                 }
-                            },
-                            data: [
-                                {value: 200, name: '吊牌机1'},
-                                {value: 310, name: '吊牌机2'},
-                                {value: 234, name: '吊牌机3'},
-                                {value: 135, name: '包装机1'},
-                                {value: 1048, name: '包装机2'},
-                                {value: 251, name: '包装机3'},
-                                {value: 147, name: '检针机1'},
-                                {value: 102, name: '检针机2'}
+                            }
 
-                            ]
                         }
                     ]
                 })
             }
         },
 
-        created() {
-            this.search();
-        },
-
         //调用
         mounted() {
-            this.$nextTick(function () {
-                this.drawPie('fridData');
-            })
-        }
+            this.getProduction();
+            this.search();
+        },
     }
 
 
@@ -157,12 +159,19 @@
     }
 
     .itemCount {
-        background-color: #486586;
         font-size: 20px;
         height: 80px;
-        margin-top: 20px;
-        margin-left: 20px;
+        text-align:center;
         padding: 10px;
-        color: #fff;
+        color: black;
+        position: relative;
+        margin-top: 20px;
+        margin-left: 50px;
+        border: 5px;
+        border-style:outset;
+        border-radius: 30px;
+        list-style:none;
+        border-color: red;
     }
+
 </style>

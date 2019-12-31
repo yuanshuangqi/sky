@@ -12,12 +12,9 @@
                 <el-form-item prop="roleName">
                     <el-input v-model="search.roleName" placeholder="角色名称" size="small"  @keydown.enter.native="query"/>
                 </el-form-item>
+                <el-button type="primary" icon="el-icon-search" @click="query">检 索</el-button>
+                <el-button type="primary"  @click="add" v-if="$skyPermission.hasPermission('role_mgr_add')">添 加</el-button>
             </el-form>
-        </div>
-        <div class="page-header-btn">
-            <el-button type="primary" round size="small" @click="add" v-if="$skyPermission.hasPermission('role_mgr_add')">添 加</el-button>
-            <el-button type="primary" round size="small" @click="query">检 索</el-button>
-            <el-button type="success" round size="small" @click="reset">重 置</el-button>
         </div>
     </div>
     <div class="page-main">
