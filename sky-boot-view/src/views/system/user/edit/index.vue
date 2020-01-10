@@ -11,9 +11,9 @@
             <el-form-item label="电话号码" prop="phone">
                 <el-input v-model="editForm.phone"  autocomplete="off"/>
             </el-form-item>
-            <el-form-item label="部门" prop="dept.id">
-                <el-tree-select :styles="elSelectStyle" v-model="editForm.dept.id" :selectParams="selectParams" :treeParams="treeParams" />
-            </el-form-item>
+            <!--<el-form-item label="部门" prop="dept.id">-->
+                <!--<el-tree-select :styles="elSelectStyle" v-model="editForm.dept.id" :selectParams="selectParams" :treeParams="treeParams" />-->
+            <!--</el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="editFormSubmit">确 定</el-button>

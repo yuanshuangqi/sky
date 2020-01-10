@@ -1,20 +1,44 @@
 <template>
     <div class="main">
-        <div id="fridData" style="width: 800px;height: 600px;"></div>
-        <div id="total" style="width: 250px;height: 600px;">
-            <ul class="totalData">
-                <li class="itemCount" v-for="(item, index) in total" :key="index">
-                    {{item.processName}}<br>
-                    {{item.totalCount}}
-                </li>
-                <li id="20" class="30">你好</li>
-            </ul>
+        <div id="fridData" style="width: 60%;height: 600px;"></div>
+        <div class="total" style="width: 500px;height: 600px;">
+            <div class="searchBar">
+                <div class="datePicker">
+                    <div class="block">
+                        <span class="demonstration">开始日期</span>
+                        <el-date-picker
+                                v-model="query.dateFrom"
+                                type="date"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+                    <div class="block">
+                        <span class="demonstration">结束日期</span>
+                        <el-date-picker
+                                v-model="query.dateTo"
+                                align="right"
+                                type="date"
+                                placeholder="选择日期"
+                                :picker-options="pickerOptions">
+                        </el-date-picker>
+                    </div>
+                </div>
+                <el-button type="primary"  icon="el-icon-search" @click="searchData">检 索</el-button>
+            </div>
+            <span class="totalData">
+                <ul>
+                    <li class="itemCount" v-for="(item, index) in total" :key="index">
+                        {{item.processName}}<br>
+                        {{item.totalCount}}
+                    </li>
+                </ul>
+            </span>
         </div>
     </div>
 </template>
 <script>
     import echarts from 'echarts'
-    import {getList,getData} from 'api/frid'
+    import {getList,getData} from 'api/dataanalytics'
 
     export default {
         name: '',
@@ -22,25 +46,54 @@
             return {
                 charts: '',
                 total: [],
-                query: {
-                    dateFrom: '',
-                    dateTo: ''
+                production:[],
+                pickerOptions: {
+                    disabledDate(time) {
+                        return time.getTime() > Date.now();
+                    },
+                    shortcuts: [{
+                        text: '今天',
+                        onClick(picker) {
+                            picker.$emit('pick', new Date());
+                        }
+                    }, {
+                        text: '昨天',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24);
+                            picker.$emit('pick', date);
+                        }
+                    }, {
+                        text: '一周前',
+                        onClick(picker) {
+                            const date = new Date();
+                            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', date);
+                        }
+                    }]
                 },
-                production:[]
+                query: {
+                    dateFrom: new Date(),
+                    dateTo: new Date(),
+                },
             }
+        },
+        components: {
         },
         methods: {
 
             getProduction(){
                 getData(this.query).then(res => {
                     this.production = res.data.productionInfoList;
-                    console.log(this.production);
+                    this.search();
                 })
             },
+            searchData() {
+                this.getProduction()
+             },
             search() {
-                getList().then(res => {
+                getList(this.query).then(res => {
                     this.total = res.data.fridDataInfoList;
-                    console.log(this.total)
                     this.$nextTick(function () {
                      this.drawPie('fridData');
                     })
@@ -139,7 +192,6 @@
         //调用
         mounted() {
             this.getProduction();
-            this.search();
         },
     }
 
@@ -150,12 +202,6 @@
         display: flex;
         align-items: flex-start;
 
-    }
-
-    #fridData {
-    }
-
-    #total {
     }
 
     .itemCount {
@@ -172,6 +218,23 @@
         border-radius: 30px;
         list-style:none;
         border-color: red;
+    }
+    .searchBar{
+        display: flex;
+        align-items: flex-start;
+
+    }
+    .datePicker{
+        display: flex;
+        align-items: flex-start;
+
+    }
+    .el-button--primary {
+        margin-top: 20px;
+    }
+    ul{
+        width: 200px;
+        float:right;
     }
 
 </style>

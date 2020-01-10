@@ -8,7 +8,10 @@ import Menu from 'views/system/menu'
 import Dept from 'views/system/dept'
 import Dict from 'views/system/dict'
 import Quartz from 'views/quartz'
-import Frid from 'views/frid'
+import Dataanalytics from 'views/dataanalytics'
+import Bagging from 'views/bagging'
+import Metalcheck from 'views/metalcheck'
+import PO from 'views/po'
 import localStore from 'storejs'
 import ObjUtil from "../util/ObjUtil";
 
@@ -52,8 +55,20 @@ const routes = [
                 component: Quartz
             },
             {
-                path: '/frid',
-                component: Frid
+                path: '/dataanalytics',
+                component: Dataanalytics
+            },
+            {
+                path: '/bagging',
+                component: Bagging
+            },
+            {
+                path: '/metalcheck',
+                component: Metalcheck
+            },
+            {
+                path: '/po',
+                component: PO
             },
         ]
     }

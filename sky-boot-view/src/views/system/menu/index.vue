@@ -95,7 +95,7 @@
                 this.editObj = row
             },
             del(index,row){
-                this.$confirm('是否删除该角色?', '提示', {
+                this.$confirm('是否删除该菜單?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'

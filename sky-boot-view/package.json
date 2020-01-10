@@ -10,6 +10,7 @@
     "dependencies": {
         "axios": "^0.19.0",
         "core-js": "^3.4.3",
+        "echarts": "^4.6.0",
         "el-tree-select": "^3.1.7",
         "element-ui": "^2.13.0",
         "qs": "^6.9.1",
@@ -43,7 +44,16 @@
             "eslint:recommended"
         ],
         "rules": {
-            "no-console": ["warn", { "allow": ["warn", "error", "log"] }]
+            "no-console": [
+                "warn",
+                {
+                    "allow": [
+                        "warn",
+                        "error",
+                        "log"
+                    ]
+                }
+            ]
         },
         "parserOptions": {
             "parser": "babel-eslint"

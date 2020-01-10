@@ -20,9 +20,12 @@
         <div class="page-main">
             <el-table :data="userData" size="small">
                 <el-table-column prop="account" label="用户名"/>
-                <el-table-column prop="sex" label="性别"/>
+                <el-table-column prop="sex" label="性别">
+                    <template slot-scope="scope">
+                        {{scope.row.sex==1?'女':'男'}}
+                    </template>
+                </el-table-column>
                 <el-table-column prop="phone" label="电话号码"/>
-                <el-table-column prop="dept.deptName" label="部门"/>
                 <el-table-column label="角色">
                     <template slot-scope="scope">
                         {{userRoles(scope.row)}}
@@ -66,7 +69,7 @@
 
 <script>
     import {getUserData, del as delUser} from 'api/user'
-    import {getData as getDeptData} from "../../../api/dept";
+    // import {getData as getDeptData} from "../../../api/dept";
     import add from './add'
     import edit from './edit'
     import roleAssign from './roleAssign'
@@ -171,7 +174,7 @@
 
         },
         created() {
-            Promise.all([this.loadUserData(),getDeptData()]).then(res=>{
+            Promise.all([this.loadUserData()]).then(res=>{
                 if (res[1].data.code === 20000) {
                     this.deptTreeData = res[1].data.data.rows
                 }

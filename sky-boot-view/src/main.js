@@ -10,9 +10,11 @@ import './assets/font/iconfont.css'
 import echarts from 'echarts'
 import ObjUtil from './util/ObjUtil.js'
 import skyPermission from './permission'
+import ElementUI from 'element-ui'
 import ElTreeSelect from 'el-tree-select';
 
 Vue.use(ElTreeSelect);
+Vue.use(ElementUI);
 Vue.config.productionTip = false
 Vue.prototype.ObjUtil = ObjUtil
 Vue.prototype.$skyPermission = skyPermission

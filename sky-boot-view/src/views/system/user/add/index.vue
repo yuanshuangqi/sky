@@ -11,9 +11,9 @@
             <el-form-item label="电话号码" prop="phone">
                 <el-input v-model="addForm.phone"  autocomplete="off"/>
             </el-form-item>
-            <el-form-item label="部门" prop="dept.id">
-                <el-tree-select :styles="elSelectStyle" v-model="addForm.dept.id" :selectParams="selectParams" :treeParams="treeParams" />
-            </el-form-item>
+            <!--<el-form-item label="部门" prop="dept.id">-->
+                <!--<el-tree-select :styles="elSelectStyle" v-model="addForm.dept.id" :selectParams="selectParams" :treeParams="treeParams" />-->
+            <!--</el-form-item>-->
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="addFormSubmit">确 定</el-button>
@@ -29,16 +29,16 @@
         name: "index",
         props:{
             addChildDialogVisible:Boolean,
-            deptTreeData:Array
+            // deptTreeData:Array
         },
         data(){
           return {
               addForm:{
                   account:'',
                   phone:'',
-                  dept:{
-                      id:''
-                  },
+                  // dept:{
+                  //     id:''
+                  // },
                   sex:'1'
               },
               addFormRules:{
